@@ -7,37 +7,23 @@ S = sys.stdin.readline().rstrip()
 
 
 def count_word(input):
+    count_alpha = 0
+    max_list = []
     input = input.upper()
-    # 1. 알파벳 개수만큼의 list 생성
-    count_list = [0] * 26
-    for s in input:
-        # 2. 유니코드로 변환시킨 s 값 - 65 index에 ++
-        count_list[ord(s)-65] += 1
+    # 1. count() 함수로 () 안에 있는 요소가 몇번 나오는지 체크
+    # cf) 'A'를 아스키코드로 변환하면 65 , chr(숫자) => 문자로 변환, ord(문자) => 숫자
+    # 2. max_list = 알파벳 숫자만큼(26) 각 문자가 나온 횟수가 기록된 리스트
+    for i in range(26):
+        count_alpha = input.count(chr(i + 65))
+        max_list.append(count_alpha)
+    # 최댓값을 저장
+    max_val = max(max_list)
+    max_index = max_list.index(max_val)
 
-    # max_val = 0
-    # max_idx = 0
-    dup_count = 0
-    check_duplicate = False
-
-    # for idx, val in enumerate(count_list):
-    #     if val > max_val:
-    #         max_val = val
-    #         max_idx = idx
-
-    max_val = max(count_list)
-    max_idx = count_list.index(max_val)
-
-    for val in count_list:
-        if max_val == val:
-            dup_count += 1
-        if dup_count == 2:
-            check_duplicate = True
-            break
-
-    if check_duplicate:
+    if max_list.count(max_val) > 1:
         print("?")
     else:
-        print(chr(max_idx+65))
+        print(chr(max_index + 65))
 
 
 count_word(S)
