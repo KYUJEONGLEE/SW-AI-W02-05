@@ -16,6 +16,7 @@ def calc_AVG_rate(input):
         sum_of_score = sum(class_id[1:])
         # sum 함수 사용법
         # 리스트 인덱싱과 동일 => index 1부터 끝까지 더하려면 list[1:]
+        # 직접 구현한 것과 비교해보니 조금 더 빠름
 
         # for i in range(1, len(class_id)):
         #     sum_of_score += class_id[i]
