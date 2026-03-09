@@ -19,7 +19,6 @@ T = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 # 방문했던 도시를 판단할 수 있는 방법은?
 # result = []
 distance_cost = []
-min_ = 0
 
 
 def TSP(t, move, sum_):
@@ -31,8 +30,10 @@ def TSP(t, move, sum_):
     if len(move) == len(t):
         # move_route = move.copy()
         # result.append(move_route)
-        final_sum = sum_ + t[move[-1]][move[0]]
-        distance_cost.append(final_sum)
+        zero_distance = t[move[-1]][move[0]]
+        if zero_distance != 0:
+            final_sum = sum_ + t[move[-1]][move[0]]
+            distance_cost.append(final_sum)
         return
 
     for city_num in range(len(t)):
@@ -40,16 +41,17 @@ def TSP(t, move, sum_):
         if city_num in move:
             continue
         # 도시를 하나씩 성공적으로 붙이면 경로 가중치 계산
-
-        # sum_ += t[move[-1]][city_num]
-        move.append(city_num)
-        TSP(t, move, sum_ + t[move[-2]][city_num])
+        is_zero_distance = t[move[-1]][city_num]
+        if is_zero_distance != 0:
+            # sum_ += t[move[-1]][city_num]
+            move.append(city_num)
+            TSP(t, move, sum_ + t[move[-2]][city_num])
         # // 여기에 pop 호출
         # 여기에서 비용 계산을 진행
         # sum_ -= t[move[-1]][city_num]
-        move.pop()
-    min_ = min(distance_cost)
-    return min_
+            move.pop()
+
+    return distance_cost
 
     # 여기까지 진행하면 0부터 시작해서 n 까지 도시를 시작점으로 하는 모든 조합의 수가 도출된다.
     # 하지만 문제에서 시작도시는 고정되어 있지 않기 때문에 예를들어
@@ -70,4 +72,42 @@ def TSP(t, move, sum_):
     # 시간초과
 
 
-print(TSP(T, [0], 0))
+print(min(TSP(T, [0], 0)))
+
+# # 입력 및 초기화
+# N = int(sys.stdin.readline())
+# T = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+# distance_cost = []
+
+
+# def TSP(t, move, sum_):
+#     final_sum = 0
+
+#     # 종료 조건: 모든 도시를 방문했을 때
+#     if len(move) == len(t):
+#         zero_distance = t[move[-1]][move[0]]
+#         if zero_distance != 0:
+#             final_sum = sum_ + zero_distance
+#             distance_cost.append(final_sum)
+#         return
+
+#     for city_num in range(len(t)):
+#         # 이미 방문한 도시 건너뛰기
+#         if city_num in move:
+#             continue
+
+#         # 이동 가능한 경로인지 확인 (비용이 0이 아님)
+#         is_zero_distance = t[move[-1]][city_num]
+#         if is_zero_distance != 0:
+#             move.append(city_num)
+#             # 재귀 호출: 다음 도시로 이동
+#             TSP(t, move, sum_ + is_zero_distance)
+#             # 백트래킹: 상태 복구 (pop)
+#             move.pop()
+
+#     return distance_cost
+
+
+# # 0번 도시를 시작점으로 설정하여 호출
+# result = TSP(T, [0], 0)
+# print(min(result))
