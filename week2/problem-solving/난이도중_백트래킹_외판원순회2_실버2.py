@@ -17,27 +17,57 @@ T = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
 # 비용조합 리스트에 추가
 
 # 방문했던 도시를 판단할 수 있는 방법은?
-result = []
+# result = []
+distance_cost = []
+min_ = 0
 
 
-def TSP(t, start_city, move):
+def TSP(t, move, sum_):
     # move 배열의 경로가 다 정해지면 => 길이가 N이 되면
     # 결과 리스트에 추가해서 경로를 담기
     # 해당 재귀 종료하기?
+    final_sum = 0
+
     if len(move) == len(t):
-        move_route = move.copy()
-        result.append(move_route)
+        # move_route = move.copy()
+        # result.append(move_route)
+        final_sum = sum_ + t[move[-1]][move[0]]
+        distance_cost.append(final_sum)
         return
 
     for city_num in range(len(t)):
         # 모든 경로의 조합을 찾아보자
         if city_num in move:
             continue
+        # 도시를 하나씩 성공적으로 붙이면 경로 가중치 계산
+
+        # sum_ += t[move[-1]][city_num]
         move.append(city_num)
-        TSP(t, start_city, move)
+        TSP(t, move, sum_ + t[move[-2]][city_num])
         # // 여기에 pop 호출
+        # 여기에서 비용 계산을 진행
+        # sum_ -= t[move[-1]][city_num]
         move.pop()
-    print(result)
+    min_ = min(distance_cost)
+    return min_
+
+    # 여기까지 진행하면 0부터 시작해서 n 까지 도시를 시작점으로 하는 모든 조합의 수가 도출된다.
+    # 하지만 문제에서 시작도시는 고정되어 있지 않기 때문에 예를들어
+    # 1 -> 3 -> 2 -> 4 의 경로는 2 -> 4 -> 1 -> 3 의 경로와 같다고 판단할 수 있다.
+    # 그러면 여기에서 마지막 원소를 i 로 첫번째 원소를 j 로 두고 W[i][j] 의 값(=비용) 을 더해주면
+    # 비용을 계산할 수 있다.
+
+    # 3 일떄 시작점이 0인 경로는 2개
+    # 4 일때 시작점이 0인 경로는 6개
+    # 5 일때 4! = 24개 ... n 일때 (n-1)!
+    # 즉 result의 크기가 (n-1)! 이면 그대로 종료해도 괜찮은가?
+    # => 간단하게 move의 첫 원소에 0을 넣어주면 0 을 시작점으로 하는 조합들이 만들어진다 :<
+
+    # 경로를 구했으니 비용을 구해보자.
+    # 하나의 경로를 완성할떄마다 가중치를 더해서 다른 리스트에 저장하면?
+    # 아니면 move에 올바른 경로를 추가할떄마다 비용을 더하는 방법이 있을까?
+
+    # 시간초과
 
 
-TSP(T, 0, [])
+print(TSP(T, [0], 0))
