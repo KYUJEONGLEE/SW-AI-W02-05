@@ -46,10 +46,7 @@ def get_prime(n):
             continue
 
         for j in range(i, (n-1)//i + 1):
-            if ans[i * j - 2] == 0:
-                pass
-            else:
-                ans[i * j - 2] = 0
+            ans[i * j - 2] = 0
 
     # 0 이 아닌값들만 모아준다.
     for x in ans:
@@ -63,19 +60,25 @@ def get_prime(n):
     # 이떄 얻어낸 두 값들의 차가 적은것을 선택
 
 def goldbach_partitions(R):
-    partition = []
-    sub_value = 10000
+    # 시간이 많이 걸렸던 이유
+    # 테스트 케이스를 돌때마다 get_prime을 호출해서
+    # 입력값의 마지막값인 10000을 인자로 소수 리스트를 만든후, set로 저장하면
+    # get_prime을 한번만 불러오기때문에 시간이 적게 걸린다.
+    prime_list = get_prime(10000)
+    set_prime = set(prime_list)
+
     for r in R:
-        prime_list = get_prime(r)
+        # Set 사용 이유 : ~
+        #
+        # i :  ~ 부터 ~ 까지 검사?
+        # 두 소수의 차가 가장 적은것을 요구하므로, r / 2 즉 중앙에서 부터 검사하는게 효율적이다
+        # r // 2 부터 i를 감소시키면서 검사
 
-    for prime in prime_list:
-        p1 = r - prime
-        if p1 in prime_list:
-            if sub_value > abs(p1 - prime):
-                partition.append([prime, p1])
-                sub_value = p1 - prime
-
-    print(*partition[0], sep=" ")
+        for i in range(r // 2, 0, -1):
+            # i 와 r - i 가 소수인 set을 찾는다.
+            if i in set_prime and (r - i) in set_prime:
+                print(f"{i} {r - i}")
+                break
 
 
 goldbach_partitions(T)
