@@ -13,23 +13,35 @@ N = int(sys.stdin.readline())
 
 
 def Queen(n):
-
-    count = 0
-
     def backtracking(row, current_combination):
-        nonlocal count
-        # 단순하게 조건을 모두 충족하는 조합이 있다면 count를 증가시키면 된다.
+
         if len(current_combination) == n:
-            nonlocal count
-            count += 1
             return
         # row 는 backtracking의 인자로 들어간다
         # row번째 행에 퀸을 어느 열에 놓을까?
         for col in range(n):
+
             # 퀸을 놓을 수 있는지 검사
+            # 검사해야 할 항목
+            # 1. 같은 열인지 (같은 행인지 검사는 한 행에 하나만 놓기로 설정하므로 필요없다.)
+            # 2. 대각선에 위치하는지
+            if col in current_combination:
+                continue
+            if abs(col - current_combination[-1]) == 1:
+                continue
+            # 현재 놓으려는 위치 (row, col)
+            # 이전의 위치를 어떻게 받아올까?
+            # current_combination 의 리스트값으로 가져올수있다.
+            # 현재 row = 3 라고 했을때, 예를 들어 current에는 [0, 3, 5] 가 들어있다고 하자
+            # 전에 놓인 퀸의 위치는 2행 5열 이다. 즉 row - 1 행과 current의 마지막 열[-1]
+            # 어차피 바로 전의 행이랑 비교하므로 열 인덱스끼리의 차이가 1 이면 대각선이지 않을까?
+
+            current_combination.append(col)
+            # current_combination 에는 각 행에 놓인 퀸의 열 번호가 들어간다
+            backtracking(row + 1, current_combination)
+            current_combination.pop()
 
     backtracking(0, [])
-    return count
 
 
 if __name__ == "__main__":
