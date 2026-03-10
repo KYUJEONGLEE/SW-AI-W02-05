@@ -32,3 +32,4 @@ if __name__ == "__main__":
     output = no_dup_suyeal(int(N), int(M))
     for o in output:
         print(*o)
+

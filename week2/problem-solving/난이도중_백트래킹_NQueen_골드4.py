@@ -78,7 +78,6 @@ def Queen(n):
                 current_combination.pop()
 
                 # 시간 초과 났음 , 어디 부분에서?
-                # 불필요한 연산을 줄여야한다.
 
     backtracking(0, [])
     return count
