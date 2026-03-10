@@ -16,13 +16,39 @@
 min, max = input().split()
 min, max = int(min), int(max)
 
+# 제곱 ㄴㄴ수가 아닌지 표시하는 리스트
+# 각 숫자칸은 숫자 n - min 칸에 매핑
 no_square_list = [0] * (max - min + 1)
 
 
-def square_nono():
+def square_nono(a, b):
+    # a, b = 최소값과 최댓값을 입력받으면
+    # 두 사이의 ㄴㄴ 제곱수의 개수를 반환하는 함수
+    # => 제곱수의 배수를 찾아 지우는 문제로 변환
 
-    return
+    # min 이상인 '제곱수X의 첫 번째 배수'는 어떻게 구하지?
+    # min / 제곱수 k 했을 때, 나머지가 0이면 min 이 첫 배수,
+    # 아니면 (몫 + 1) * k 가 첫 배수
+    i = 2
+
+    while i ** 2 <= max:
+        k = i ** 2
+        mul_k = 0
+
+        if a % k == 0:
+            mul_k = a
+        else:
+            mul_k = ((a // k) + 1) * k
+
+        while mul_k <= max:
+            no_square_list[mul_k - a] = 1
+            mul_k += k
+
+        i += 1
+
+    return no_square_list.count(0)
 
 
 if __name__ == "__main__":
-    print()
+    nono_square = square_nono(min, max)
+    print(nono_square)
