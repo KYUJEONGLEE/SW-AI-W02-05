@@ -3,7 +3,6 @@
 def binary_search(key, array):
     # key = 찾고자 하는 값, array = 배열
     pl, pr = 0, len(array) - 1
-    pc = (pl + pr) // 2
 
     # pl,pr,pc 를 설정
     # 각 의미는 배열의 왼쪽값, 오른쪽값, 중앙값
@@ -24,19 +23,18 @@ def binary_search(key, array):
     # 반복문의 구조를 어떻게 짜야할까?
 
     while True:
+        pc = (pl + pr) // 2
+        # pc는 로직이 반복될때마다 공통적으로 재할당하는 변수
+        # 그러므로 while 문이 시작할때 재할당 시킨다.
         if pl > pr:
             return -1
-
+        # 위 pl > pr 조건문을 어디다가 놓아야 연산을 덜 할까?
         if array[pc] == key:
             return pc
-
         elif array[pc] > key:
             pr = pc - 1
-            pc = (pl + pr) // 2
-
         elif array[pc] < key:
             pl = pc + 1
-            pc = (pl + pr) // 2
 
 
 if __name__ == "__main__":
