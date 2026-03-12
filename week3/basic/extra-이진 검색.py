@@ -26,15 +26,20 @@ def binary_search(key, array):
         pc = (pl + pr) // 2
         # pc는 로직이 반복될때마다 공통적으로 재할당하는 변수
         # 그러므로 while 문이 시작할때 재할당 시킨다.
-        if pl > pr:
-            return -1
+
         # 위 pl > pr 조건문을 어디다가 놓아야 연산을 덜 할까?
+        # 굳이 반복문을 한번 더 들어갈 필요없이 마지막에서 종료조건을 검사해주면
+        # 연산 횟수가 1번 줄어든다.
         if array[pc] == key:
             return pc
         elif array[pc] > key:
             pr = pc - 1
         elif array[pc] < key:
             pl = pc + 1
+
+        if pl > pr:
+            return -1
+        # 탐색 종료 조건을 반복문 끝에서 검사
 
 
 if __name__ == "__main__":
