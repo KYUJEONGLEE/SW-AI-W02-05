@@ -9,8 +9,9 @@ X = input().rstrip()
 
 
 def advertisement(n):
-    min = 1000000
+
     length = len(n)
+    min = length
     for i in range(1, length):
         if n[:i] == n[-i:]:
             # 슬라이싱은 비용이 많이 나간다. 시간복잡도 위험

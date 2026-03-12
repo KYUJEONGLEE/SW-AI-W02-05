@@ -16,6 +16,7 @@ def num_to_word(n):
             return
 
         for char in phone[n[start]]:
+            # phone[숫자] = "abc" ...
             current_combination.append(char)
             backtracking(start + 1, current_combination)
             current_combination.pop()

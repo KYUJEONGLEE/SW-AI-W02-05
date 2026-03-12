@@ -44,7 +44,6 @@ def combinations(n, k):
             start: 탐색을 시작할 숫자
             current_combination: 현재까지 선택한 숫자들
         """
-        # TODO: base case - k개를 모두 선택했으면 결과에 추가
         if len(current_combination) == k:
             result_combination = current_combination.copy()
             result.append(result_combination)
@@ -55,8 +54,6 @@ def combinations(n, k):
             backtrack(i + 1, current_combination)
             current_combination.pop()
 
-        # TODO: start부터 n까지 숫자를 하나씩 시도
-        # TODO: 백트랙킹 3단계 구현
         # 1. 선택(Choose)
         # 2. 탐색(Explore)
         # 3. 취소(Unchoose)
