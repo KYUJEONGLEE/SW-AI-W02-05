@@ -137,12 +137,14 @@ class LinkedList:
                 # 가리키는 노드가 p일때까지 head에서 next로 이동한다.
                 while ptr.next is not p:
                     ptr = ptr.next
-                    next_ptr = ptr.next
+                    # 끝까지 갔는데 못찾으면 return 없음
+                    if ptr is None:
+                        return
 
+                ptr.next = p.next
                 # 노드.next 가리키는 노드가 p인 ptr을 찾았다.
                 # ptr.next를 p 다음 노드를 가리키게 한다.
-                ptr.next = next_ptr
-
+                self.current = ptr
                 self.no -= 1
 
 
