@@ -22,51 +22,65 @@
 - 재귀적으로 왼쪽과 오른쪽 부분 정렬
 """
 
-
-def partition(arr, low, high):
-    """
-    배열을 피벗 기준으로 분할하는 함수
-
-    Args:
-        arr: 배열
-        low: 시작 인덱스
-        high: 끝 인덱스
-
-    Returns:
-        피벗의 최종 위치 인덱스
-    """
-    
-    return 1
+from typing import MutableSequence
 
 
-def quick_sort_helper(arr, low, high):
-    """
-    퀵 정렬 재귀 함수
+def sort3(a: MutableSequence, left: int, right: int, center: int):
+    # 피벗 정하는 알고리즘
+    # 3개의 값을 정렬하고 가운데 값을 피벗으로 정한다.
+    # 가운데 값을 배열 마지막 2번째에 위치 시키면
+    # 탐색 할 범위가 유의미하게 줄어든다.
 
-    Args:
-        arr: 배열
-        low: 시작 인덱스
-        high: 끝 인덱스
-    """
-    # TODO: base case - low가 high보다 작을 때만 정렬
-    # 분할하여 피벗 인덱스 얻기
-    # 피벗 왼쪽 부분 재귀 정렬
-    # 피벗 오른쪽 부분 재귀 정렬
-    pass
+    if a[center] < a[left]:
+        a[left], a[center] = a[center], a[left]
+    if a[right] < a[center]:
+        a[right], a[center] = a[center], a[right]
+    if a[center] < a[left]:
+        a[left], a[center] = a[center], a[left]
+
+    return center
 
 
-def quick_sort(arr):
-    """
-    퀵 정렬 메인 함수
+def q_sort(a: MutableSequence, left: int, right: int) -> None:
+    pl = left
+    pr = right
+    pc = (left + right) // 2
 
-    Args:
-        arr: 정렬할 배열
+    pivot_index = sort3(a, pl, pr, pc)
+    pivot = a[pivot_index]
 
-    Returns:
-        정렬된 배열
-    """
-    quick_sort_helper(arr, 0, len(arr) - 1)
-    return arr
+    a[pr - 1], a[pivot_index] = a[pivot_index], a[pr - 1]
+    # 피벗의 위치를 마지막 2번쨰 위치로 바꿈
+    pl += 1
+    pr -= 2
+
+    while pl <= pr:
+        while a[pl] < pivot:
+            pl += 1
+        while a[pr] > pivot:
+            pr -= 1
+
+        if pl <= pr:
+            a[pl], a[pr] = a[pr], a[pl]
+            pl += 1
+            pr -= 1
+
+    # 아래와 같은 조건문을 붙이는 이유는
+    # 한쪽 구간의 크기가 0개 or 1개일 수 있기 때문에
+    # 이미 정렬된 구간은 재귀호출 할 필요가 없다.
+    if left < pr:
+        # 왼쪽 구간에 원소가 2개 이상 있는지확인
+        # 왼쪽 구간은 left ~ pr 까지 나뉘고
+        # 오른쪽 구간은 pl ~ right 으로 나뉜다.
+        # left < pr 일때만 원소가 2개 이상
+        q_sort(a, left, pr)
+    if pl < right:
+        q_sort(a, pl, right)
+
+
+def quick_sort(a: MutableSequence) -> None:
+    q_sort(a, 0, len(a) - 1)
+    return a
 
 
 # 테스트 케이스

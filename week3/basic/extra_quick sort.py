@@ -3,6 +3,10 @@ from typing import MutableSequence
 
 def sort3(a: MutableSequence, left: int, right: int, center: int):
     # 피벗 정하는 알고리즘
+    # 3개의 값을 정렬하고 가운데 값을 피벗으로 정한다.
+    # 가운데 값을 배열 마지막 2번째에 위치 시키면
+    # 탐색 할 범위가 유의미하게 줄어든다.
+
     if a[center] < a[left]:
         a[left], a[center] = a[center], a[left]
     if a[right] < a[center]:
