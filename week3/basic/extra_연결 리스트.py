@@ -124,6 +124,27 @@ class LinkedList:
                 # prev_next를 None으로 지워준다.
                 self.no -= 1
 
+    def remove(self, p: Node) -> None:
+        # 임의의 p node 를 삭제하는 함수
+        # 리스트가 비어있지 않아야 한다.
+        # p가 헤드면 remove_head() 호출
+        if self.no != 0:
+            if p is self.head:
+                self.remove_head()
+            else:
+                ptr = self.head
+                # p가 헤드가 아니면
+                # 가리키는 노드가 p일때까지 head에서 next로 이동한다.
+                while ptr.next is not p:
+                    ptr = ptr.next
+                    next_ptr = ptr.next
+
+                # 노드.next 가리키는 노드가 p인 ptr을 찾았다.
+                # ptr.next를 p 다음 노드를 가리키게 한다.
+                ptr.next = next_ptr
+
+                self.no -= 1
+
 
 if __name__ == "__main__":
     P = LinkedList()
