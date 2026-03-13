@@ -25,6 +25,34 @@ class LinkedList:
     def __len__(self) -> int:
         return self.no
 
+    def search(self, data: Any) -> int:
+        # 연결리스트에서 data를 search 하는 함수
+        # 있다면 그 노드가 몇번쨰 인지 반환한다.
+        # 없으면 -1을 반환한다.
+
+        # 헤드부터 꼬리까지 선형탐색으로 진행한다
+        cnt = 0
+        # 시작 : 헤드부터, 그걸 ptr 이라는 변수에 저장
+        ptr = self.head
+        # 종료 조건 -> p 노드가 가르키는 값이 None 이면 꼬리
+        while ptr is not None:
+            # ptr 이 None 이 아닐때까지 반복한다.
+            if ptr.data == data:
+                return cnt
+
+            # 현재 가르키고 있는 ptr을 다음 next 노드로 정한다.
+            ptr = ptr.next
+            cnt += 1
+            # 노드를 탐색할떄마다 카운트 + 1
+        return -1
+
+    def contain(self, data: Any) -> bool:
+        if self.search(data) >= 0:
+            return True
+        return False
+        # 현재 data가 포함되어있는지 여부를 bool 값으로 알려주는 함수
+        # 위에서 구현한 search() 를 이용한다.
+
     def add_head(self, data: Any) -> None:
         # 맨 앞 head 에 원소를 추가하는 함수
         # 현재 헤드가 가지고 있는 포인터 참조값을 ptr 변수에 담아준다.
