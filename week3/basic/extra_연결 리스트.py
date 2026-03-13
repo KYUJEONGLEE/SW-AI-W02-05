@@ -38,6 +38,7 @@ class LinkedList:
         while ptr is not None:
             # ptr 이 None 이 아닐때까지 반복한다.
             if ptr.data == data:
+                self.current = ptr
                 return cnt
 
             # 현재 가르키고 있는 ptr을 다음 next 노드로 정한다.
@@ -66,6 +67,26 @@ class LinkedList:
         self.head = self.current = Node(data, ptr)
         self.no += 1
 
+    def add_tail(self, data: Any) -> None:
+        # 맨 마지막에 노드를 새로 추가하는 함수
+        # 마지막 tail 노드에 접근하려면 어떻게 해야할까?
+        # None 을 담고 있는 node를 찾을까? 검색처럼 앞에서부터 탐색할 방법밖에 없을까?
+
+        # 만약 연결리스트가 비어있다면 그냥 head에 추가한다.
+        if self.no == 0:
+            self.add_head(data)
+        else:
+            # 비어있지 않은 상태면 tail 까지 이동한다.
+            ptr = self.head
+            # ptr의 next가? 가르키는게 None 이 아닐때까지 반복한다.
+            while ptr.next is not None:
+                ptr = ptr.next
+            # 헷갈림
+
+            # 위 반복문을 통해 마지막 ptr을 받아왔다.
+            ptr.next = self.current = Node(data, None)
+            self.no += 1
+
 
 if __name__ == "__main__":
-    P = Node
+    P = LinkedList()
