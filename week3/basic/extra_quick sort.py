@@ -19,12 +19,12 @@ def q_sort(a: MutableSequence, left: int, right: int) -> None:
     pc = (left + right) // 2
 
     pivot_index = sort3(a, pl, pr, pc)
+    pivot = a[pivot_index]
 
-    a[pr - 1], a[pivot_index] = a[pivot_index], a[pr - 1]\
-        # 피벗의 위치를 마지막 2번쨰 위치로 바꿈
+    a[pr - 1], a[pivot_index] = a[pivot_index], a[pr - 1]
+    # 피벗의 위치를 마지막 2번쨰 위치로 바꿈
     pl += 1
     pr -= 2
-    pivot = a[pivot_index]
 
     while pl <= pr:
         while a[pl] < pivot:
