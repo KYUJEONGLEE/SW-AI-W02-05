@@ -135,12 +135,13 @@ class LinkedList:
                 ptr = self.head
                 # p가 헤드가 아니면
                 # 가리키는 노드가 p일때까지 head에서 next로 이동한다.
-                while ptr.next is not p:
+                while ptr is not None and ptr.next is not p:
+                    # 순서도 중요하다 None 부터 검사해야 안터진다.
                     ptr = ptr.next
                     # 끝까지 갔는데 못찾으면 return 없음
-                    if ptr is None:
-                        return
-
+                    # 이게 안전한 코드가 아닌이유 : 조건 검사 단계에서 None
+                if ptr is None or ptr.next is None:
+                    return
                 ptr.next = p.next
                 # 노드.next 가리키는 노드가 p인 ptr을 찾았다.
                 # ptr.next를 p 다음 노드를 가리키게 한다.
