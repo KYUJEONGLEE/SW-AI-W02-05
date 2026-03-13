@@ -87,6 +87,43 @@ class LinkedList:
             ptr.next = self.current = Node(data, None)
             self.no += 1
 
+    def remove_head(self) -> None:
+        # 처음 노드를 삭제하는 함수
+        # 그 다음 노드를 미리 저장해놓아야 헤드를 삭제하고 연결을 이어줄 수 있다?
+
+        # 그 전에 연결리스트가 비어있는지 확인해야한다.
+        ptr = self.head
+        if ptr is not None:
+            ptr = self.current = ptr.next
+        self.no -= 1
+
+    def remove_tail(self) -> None:
+        # 마지막 노드를 삭제하는 함수
+        ptr = self.head
+
+        # 마찬가지로 빈 연결리스트가 아니면 삭제를 진행한다
+        if ptr is not None:
+            # 마지막 노드에 접근하는 방법은 처음부터 돌면서
+            # ptr.next 가 None 이면 꼬리 노드이다.
+            # 그런데 마지막 노드 이전의 노드에서 None을 가르키게 하는 건데
+            # 그러면 마지막 노드에 접근하는게 아니라 그 전의 노드에 접근해야 하는거 아닐까?
+            # => prev 를 선언하고 그 전의 노드를 받아옴
+            if self.no == 1:
+                self.remove_head()
+            else:
+                # node의 next None 이 아닐때까지
+                while ptr.next is not None:
+                    # prev 에는 ptr 저장
+                    # ptr 은 한칸 next 이동
+                    prev_ptr = ptr
+                    ptr = ptr.next
+                prev_ptr.next = None
+                self.current = prev_ptr
+                # 반복문을 빠져나오면 ptr은 현재 꼬리 노드를 가리키고 있는 상태
+                # prev_ptr 은 마지막 노드 바로 전 노드이다.
+                # prev_next를 None으로 지워준다.
+                self.no -= 1
+
 
 if __name__ == "__main__":
     P = LinkedList()
