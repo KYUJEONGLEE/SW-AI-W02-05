@@ -71,7 +71,8 @@ def find_student_score(students: dict, name: str) -> int:
 
     return None
 
-    # 테스트 케이스
+
+# 테스트 케이스
 if __name__ == "__main__":
     # 테스트 케이스 1
     students1 = {
