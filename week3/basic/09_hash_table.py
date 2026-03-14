@@ -30,40 +30,48 @@
 - 최고점: max(scores, key=scores.get)
 """
 
-def manage_grades(students):
+
+def manage_grades(students: dict) -> tuple[float, str, int]:
     """
     학생 성적 관리 시스템
-    
+
     Args:
         students: {이름: 점수} 딕셔너리
-    
+
     Returns:
         평균, 최고점 학생 이름, 최고점
     """
     # TODO: 평균 점수 계산
-    pass
-    
-    
+    average = sum(students.values()) / len(students)
+
     # TODO: 최고 점수 학생 찾기
-    pass
-    
+    # values 중에 가장 높은 값을 가진 key를 저장
+    top_score = max(students.values())
+    for name, score in students.items():
+        if score == top_score:
+            top_student = name
+
     return average, top_student, top_score
 
-def find_student_score(students, name):
+
+def find_student_score(students: dict, name: str) -> int:
     """
     특정 학생의 점수 조회
-    
+
     Args:
         students: 학생 딕셔너리
         name: 찾을 학생 이름
-    
+
     Returns:
         점수 (없으면 None)
     """
-    # TODO: students에서 name 찾기
-    pass
+    if name in students.keys():
+        score = students[name]
+        return score
 
-# 테스트 케이스
+    return None
+
+    # 테스트 케이스
 if __name__ == "__main__":
     # 테스트 케이스 1
     students1 = {
@@ -72,22 +80,20 @@ if __name__ == "__main__":
         "Charlie": 78,
         "David": 95
     }
-    
+
     print("=== 학생 성적 관리 ===")
     avg, top_name, top_score = manage_grades(students1)
     print(f"평균 점수: {avg}")
     print(f"최고 점수: {top_name} ({top_score}점)")
     print()
-    
+
     # 테스트 케이스 2: 학생 조회
     print("=== 학생 점수 조회 ===")
     search_name = "Alice"
     score = find_student_score(students1, search_name)
     print(f"{search_name}의 점수: {score}")
     print()
-    
+
     search_name2 = "Eve"
     score2 = find_student_score(students1, search_name2)
     print(f"{search_name2}의 점수: {score2}")
-
-
