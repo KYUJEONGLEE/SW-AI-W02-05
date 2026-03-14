@@ -10,17 +10,40 @@ set은 membership test(포함 여부 확인) 에 강하다
 
 이 문제는 단순히 존재하느냐 라는 것을 물어보는 문제이므로 set으로 N 배열을 생성한다.
 
+---
+
+set() 을 사용하지 않으면 sort()로 X 배열을 정렬 한 후 , 이진탐색?
+
 """
 import sys
 
 N = int(sys.stdin.readline())
-X = set(map(int, sys.stdin.readline().split()))
+X = list(map(int, sys.stdin.readline().split()))
 
 M = int(sys.stdin.readline())
 Y = list(map(int, sys.stdin.readline().split()))
 
+# for y in Y:
+#     if y in X:
+#         print("1")
+#     else:
+#         print("0")
+
+X.sort()
+
 for y in Y:
-    if y in X:
-        print("1")
-    else:
-        print("0")
+    left = 0
+    right = N - 1
+    while True:
+        mid = (left + right) // 2
+        if y == X[mid]:
+            print("1")
+            break
+        elif y < X[mid]:
+            right = mid - 1
+        else:
+            left = mid + 1
+
+        if left > right:
+            print("0")
+            break
