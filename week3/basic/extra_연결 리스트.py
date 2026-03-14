@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Any, Type
+from typing import Any
 
 
 class Node:
@@ -92,10 +92,9 @@ class LinkedList:
         # 그 다음 노드를 미리 저장해놓아야 헤드를 삭제하고 연결을 이어줄 수 있다?
 
         # 그 전에 연결리스트가 비어있는지 확인해야한다.
-        ptr = self.head
-        if ptr is not None:
-            ptr = self.current = ptr.next
-        self.no -= 1
+        if self.head is not None:
+            self.head = self.current = self.head.next
+            self.no -= 1
 
     def remove_tail(self) -> None:
         # 마지막 노드를 삭제하는 함수
@@ -139,7 +138,7 @@ class LinkedList:
                     # 순서도 중요하다 None 부터 검사해야 안터진다.
                     ptr = ptr.next
                     # 끝까지 갔는데 못찾으면 return 없음
-                    # 이게 안전한 코드가 아닌이유 : 조건 검사 단계에서 None
+
                 if ptr is None or ptr.next is None:
                     return
                 ptr.next = p.next
