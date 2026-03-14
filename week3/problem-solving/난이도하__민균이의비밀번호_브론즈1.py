@@ -13,11 +13,14 @@ reversed_word가 저장소에 있나?
 있으면 종료
 없으면 word 저장
 마지막에 길이와 가운데 문자 출력
+
+리스트 뒤집는 방법 = [::-1]
 """
 import sys
 
 N = int(sys.stdin.readline())
 X = [sys.stdin.readline().rstrip() for _ in range(N)]
+
 visited_set = set()
 
 for word in X:
@@ -25,8 +28,10 @@ for word in X:
     if reverse_word == word:
         print(f"{len(word)} {word[len(word) // 2]}")
         break
+
     if word in visited_set:
         print(f"{len(word)} {word[len(word) // 2]}")
         break
+
     else:
         visited_set.add(reverse_word)
