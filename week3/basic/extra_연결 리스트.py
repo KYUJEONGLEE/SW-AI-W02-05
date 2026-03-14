@@ -5,8 +5,8 @@ from typing import Any
 class Node:
     # Node 라는 개념을 사용하기 위해 클래스화
     # 초기화 함수 __init__: data - Any 로 선언, 어떤 자료형이든 받을 수 있음
-    #                     next - Node 자료형\
-    # 왜 next는 노트형으로 선언할까? next가 가르키는 대상은 단순한 data가 아니라
+    #                     next - Node 자료형
+    # 왜 next는 노드형으로 선언할까? next가 가르키는 대상은 단순한 data가 아니라
     # 다음 노드 전체 이기 때문이다
     def __init__(self, data: Any = None, next: Node = None):
         self.data = data
