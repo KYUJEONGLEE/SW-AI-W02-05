@@ -2,8 +2,8 @@
 # 문제 링크: https://www.acmicpc.net/problem/23309
 import sys
 
-N, M = map(int, sys.stdin.buffer.readline().split())
-rail = list(map(int, sys.stdin.buffer.readline().split()))
+N, M = map(int, sys.stdin.readline().split())
+rail = list(map(int, sys.stdin.readline().split()))
 # command = [list(sys.stdin.readline().rstrip().split()) for _ in range(M)]
 
 prev = [0] * 1000001
@@ -31,49 +31,61 @@ for index, num in enumerate(rail):
 
 # 이제 입력받은 커맨드들을 하나씩 처리한다.
 for _ in range(M):
-    cmd = sys.stdin.buffer.readline().split()
-    op = cmd[0]
+    cmd = sys.stdin.readline().split()
+    if cmd[0] == "BN":
+        cmd[1] = int(cmd[1])
+        cmd[2] = int(cmd[2])
+        # print(f"{next[cmd[1]]}")
+        command_line.append(next[cmd[1]])
+        temp_rail = next[cmd[1]]
+        # 해당 역의 다음 역을 출력 완료
+        # cmd[2]의 역을 cmd[1]의 역 다음으로 설정한다.
+        next[cmd[1]] = cmd[2]
+        prev[temp_rail] = cmd[2]
+        # 그리고 새롭게 추가 된 역의 다음역을 기존 cmd[1] 이 가리키고 있던
+        # 역으로 설정한다.
+        next[cmd[2]] = temp_rail
+        prev[cmd[2]] = cmd[1]
+        # 추가적으로 한개의 역을 삽입햇다고 prev도 같이 변경해줘야한다.
+    elif cmd[0] == "BP":
+        cmd[1] = int(cmd[1])
+        cmd[2] = int(cmd[2])
 
-    if op == "BN":
-        i = int(cmd[1])
-        j = int(cmd[2])
+        # print(f"{prev[cmd[1]]}")
+        command_line.append(prev[cmd[1]])
+        temp_rail = prev[cmd[1]]
 
-        command_line.append(next[i])
-        temp_rail = next[i]
+        prev[cmd[1]] = cmd[2]
+        next[temp_rail] = cmd[2]
 
-        next[i] = j
-        prev[temp_rail] = j
-        next[j] = temp_rail
-        prev[j] = i
+        prev[cmd[2]] = temp_rail
+        next[cmd[2]] = cmd[1]
 
-    elif op == "BP":
-        i = int(cmd[1])
-        j = int(cmd[2])
+    # 삭제하는 연산
+    elif cmd[0] == "CN":
+        cmd[1] = int(cmd[1])
 
-        command_line.append(prev[i])
-        temp_rail = prev[i]
+        # print(f"{next[cmd[1]]}")
+        command_line.append(next[cmd[1]])
+        temp_rail = next[cmd[1]]
 
-        prev[i] = j
-        next[temp_rail] = j
-        prev[j] = temp_rail
-        next[j] = i
+        next[cmd[1]] = next[temp_rail]
+        prev[next[temp_rail]] = cmd[1]
 
-    elif op == "CN":
-        i = int(cmd[1])
+        # del next[temp_rail]
+        # del prev[temp_rail]
 
-        command_line.append(next[i])
-        temp_rail = next[i]
+    elif cmd[0] == "CP":
+        cmd[1] = int(cmd[1])
 
-        next[i] = next[temp_rail]
-        prev[next[temp_rail]] = i
+        # print(f"{prev[cmd[1]]}")
+        command_line.append(prev[cmd[1]])
+        temp_rail = prev[cmd[1]]
 
-    elif op == "CP":
-        i = int(cmd[1])
+        prev[cmd[1]] = prev[temp_rail]
+        next[prev[temp_rail]] = cmd[1]
 
-        command_line.append(prev[i])
-        temp_rail = prev[i]
-
-        prev[i] = prev[temp_rail]
-        next[prev[temp_rail]] = i
+        # del next[temp_rail]
+        # del prev[temp_rail]
 
 print('\n'.join(map(str, command_line)))
