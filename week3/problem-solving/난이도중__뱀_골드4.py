@@ -36,27 +36,29 @@ apple_location = dict.fromkeys(apple_location, 1)
 L = int(sys.stdin.readline())
 shift = [sys.stdin.readline().split() for _ in range(L)]
 
-# board = [[0] * N for _ in range(N)]
-
-# for apple in apple_location:
-#     x, y = apple[0] - 1, apple[1] - 1
-#     board[x][y] = 1
 
 snake_queue = deque([])
 x, y = 1, 1
 
-vector = [(0, 1), (1, 0), (0, -1), (1, 0)]
+vector = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 right, left, up, down = 0, 1, 2, 3
 game_over = False
-face = 0
+face = -1
 count = 0
-if not snake_queue:
-    snake_queue.append((x, y))
-    # snake가 비어있다면 생성
-    # 일단 처음에는 무조건 오른쪽으로 이동함.
+# if not snake_queue:
+#     snake_queue.append((x, y))
+# snake가 비어있다면 생성
+# 일단 처음에는 무조건 오른쪽으로 이동함.
 for cmd in shift:
-    second = int(cmd[0])
+
+    second = int(cmd[0]) - count
     direction = cmd[1]
+
+    if direction == "D":
+        face += 1
+    elif direction == "L":
+        face -= 1
+
     while second > 0:
         count += 1
         x += vector[face][0]
@@ -64,21 +66,19 @@ for cmd in shift:
 
         snake_queue.append((x, y))
 
-        if x > N or y > N or x < 0 or y < 0:  # 부딪힌다면
-            game_over = True
-            break
-
         if snake_queue[-1] in apple_location:  # 사과가 있다면
             apple_location[snake_queue[-1]] = 0
         elif snake_queue[-1] not in apple_location:  # 사과가 없다면
             snake_queue.popleft()
 
-        second -= 1
+        if x > N or y > N or x < 0 or y < 0:  # 부딪힌다면
+            game_over = True
+            break
+        if (x + vector[face][0], y + vector[face][1]) in snake_queue:
+            game_over = True
+            break
 
-    if direction == "D":
-        face += 1
-    elif direction == "L":
-        face -= 1
+        second -= 1
 
     if game_over:
         break
