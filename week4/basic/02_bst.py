@@ -41,7 +41,7 @@ class TreeNode:
         self.right = None
 
 
-def search_bst(root, target):
+def search_bst(root, target) -> bool:
     """
     BST에서 값 검색
 
@@ -52,13 +52,17 @@ def search_bst(root, target):
     Returns:
         True/False
     """
-    # TODO: root가 None이면 False 반환
-    pass
+    if root is None:
+        return False
 
-    # TODO: 값을 찾으면 True 반환
-    # target이 작으면 왼쪽 서브트리에서 검색
-    # target이 크면 오른쪽 서브트리에서 검색
-    pass
+    if root.value == target:
+        return True
+
+    elif root.value > target:
+        return search_bst(root.left, target)
+
+    else:
+        return search_bst(root.right, target)
 
 
 # 테스트 케이스
