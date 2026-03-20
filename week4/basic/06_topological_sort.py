@@ -41,20 +41,32 @@ def topological_sort(vertices, edges):
         위상 정렬 순서
     """
     # TODO: 그래프와 진입 차수 초기화
-    pass
+    q = deque()
+    graph = {i: [] for i in range(vertices)}
+    indegree = [0] * vertices
 
     # TODO: 그래프 구성 및 진입 차수 계산
-    pass
+    for u, v in edges:
+        graph[u].append(v)
+        indegree[v] += 1
 
     # TODO: 진입 차수가 0인 정점들을 큐에 추가
-    pass
+    for idx, val in enumerate(indegree):
+        if val == 0:
+            q.append(idx)
 
     result = []
 
     # TODO: 큐가 빌 때까지 반복
     # 큐에서 정점 꺼내기
     # 인접한 정점들의 진입 차수 감소
-    pass
+    while q:
+        cur_q = q.popleft()
+        result.append(cur_q)
+        for i in graph[cur_q]:
+            indegree[i] -= 1
+            if indegree[i] == 0:
+                q.append(i)
 
     return result
 

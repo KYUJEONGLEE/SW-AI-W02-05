@@ -48,7 +48,6 @@ def dfs(graph, start, visited=None):
         visited = []
 
     # TODO: 현재 정점 방문
-
     visited.append(start)
 
     for v in graph[start]:
