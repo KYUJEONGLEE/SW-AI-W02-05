@@ -42,12 +42,27 @@ def create_graph(vertices, edges, directed=False):
         그래프 딕셔너리
     """
     # TODO: 빈 그래프 초기화
-    pass
 
     # TODO: 간선 추가
     # 간선 추가 (u에서 v로)
     # 무방향 그래프면 반대 방향도 추가
-    pass
+    if directed:
+        graph = {i: [] for i in range(vertices)}
+        for u, v in edges:
+            graph[u].append(v)
+
+    else:
+        graph = dict()
+        for u, v in edges:
+            if u in graph:
+                graph[u].append(v)
+            else:
+                graph[u] = [v]
+
+            if v in graph:
+                graph[v].append(u)
+            else:
+                graph[v] = [u]
 
     return graph
 

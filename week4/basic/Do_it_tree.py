@@ -62,3 +62,56 @@ class BinarySearchTree:
             add_node(self.root, key, value)
 
     def remove(self, key: Any) -> bool:
+        p = self.root
+        parent = None
+        is_left_child = True
+
+        # 이 반복문에서 key가 bst에 있는지 탐색한다
+        # 찾으면 True, 없으면 False를 반환
+        # 찾는다면 그 순간의 p의 위치를 가지고 있다.
+        while True:
+            if p is None:
+                return False
+
+            if key == p.key:
+                break
+            else:
+                parent = p
+                # 만약 왼쪽 자식이면
+                if key < p.key:
+                    p = p.left
+                    is_left_child = True
+                # 오른쪽 자식이면
+                else:
+                    p = p.right
+                    is_left_child = False
+        # 찾는다면 p는 삭제할 노드를 참조하고있다.
+        # 이제 삭제 할 노드의 자식노드 유무 검사
+        if p is self.root:
+            self.root = None
+            return True
+        # 삭제 할 노드가 왼쪽 노드라면
+        if is_left_child:
+            if p.left is None:
+                if p.right is None:
+                    # 그 삭제할 노드의 자식이 없다면
+                    parent.left = None
+                    return True
+                else:  # 삭제할 노드에 오른쪽 노드가 있다면
+                    parent.right = p.right
+                    return True
+
+            elif p.right is None:
+                if p.left is None:
+                    # 그 삭제할 노드의 자식이 없다면
+                    parent.left = None
+                    return True
+                else:  # 삭제할 노드에 오른쪽 노드가 있다면
+                    parent.right = p.right
+                    return True
+        else:
+
+            # 삭제 할 노드의 자식이 둘 다 없으면 parent 를 None
+            # 삭제 할 노드가 root 노드 이면 root 노드 삭제
+
+            # 왼쪽 자식 노드가 있다면,
