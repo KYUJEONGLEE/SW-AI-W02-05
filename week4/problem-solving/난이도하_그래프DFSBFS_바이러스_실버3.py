@@ -10,6 +10,13 @@
 4) q = queue 원소 pop -> 그래프의 q 정점에 있는 모든 정점들을
     visited[] 에 없다면 q에 추가
 5) visited[] 에 추가할때 count + 1
+
+왜 틀릴까..
+
+해결 방법:
+방향그래프로 그래프를 생성했었다 => 무방향 그래프로 바꿔줌
+ex) (2, 1) 로 연결이 표시되어 있으면 탐색을 못했음
+
 """
 import sys
 
@@ -25,6 +32,7 @@ def create_graph(vertices, edges):
     graph = {i: [] for i in range(1, vertices + 1)}
     for u, v in edges:
         graph[u].append(v)
+        graph[v].append(u)
     return graph
 
 
