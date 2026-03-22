@@ -10,8 +10,6 @@ for node in range(N):
     root, left, right = sys.stdin.readline().split()
     tree[root] = (left, right)
 
-# 1. 전위 순회
-
 
 def pre_recursion(node):
     if node == '.':
