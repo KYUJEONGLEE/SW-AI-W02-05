@@ -11,6 +11,7 @@ from collections import deque
 """
 N, M, V = map(int, sys.stdin.readline().split())
 visited = [False] * (N + 1)
+dfs_visited = [False] * (N + 1)
 graph = [[] for _ in range(N + 1)]
 
 for _ in range(M):
@@ -37,4 +38,14 @@ def bfs(graph, start):
                 q.append(v)
 
 
+def dfs(graph, cur):
+    dfs_visited[cur] = True
+    print(cur, end=' ')
+    for next in graph[cur]:
+        if not dfs_visited[next]:
+            dfs(graph, next)
+
+
+dfs(graph, V)
+print()
 bfs(graph, V)
