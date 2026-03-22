@@ -2,20 +2,21 @@
 # 문제 링크: https://www.acmicpc.net/problem/9372
 """
 문제 접근 방법:
+그래프를 만들어서 모든 정점을 순회하는 최소 간선 개수를 구하자
 
 해결 방법:
-
+n - 1
 """
 import sys
 
 
-def create_graph(vertices, edges):
-    graph = {i: [] for i in range(1, vertices + 1)}
-    for u, v in edges:
-        graph[u].append(v)
-        graph[v].append(u)
+# def create_graph(vertices, edges):
+#     graph = {i: [] for i in range(1, vertices + 1)}
+#     for u, v in edges:
+#         graph[u].append(v)
+#         graph[v].append(u)
 
-    return graph
+#     return graph
 
 
 if __name__ == "__main__":

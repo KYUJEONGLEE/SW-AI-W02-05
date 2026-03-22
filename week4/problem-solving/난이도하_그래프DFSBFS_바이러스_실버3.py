@@ -18,9 +18,9 @@
 ex) (2, 1) 로 연결이 표시되어 있으면 탐색을 못했음
 
 """
-import sys
-
 from collections import deque
+import sys
+sys.exit()
 
 V = int(sys.stdin.readline())
 E = int(sys.stdin.readline())
