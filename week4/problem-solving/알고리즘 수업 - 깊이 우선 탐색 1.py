@@ -1,5 +1,6 @@
 import sys
 sys.setrecursionlimit(10**6)
+
 N, M, R = map(int, sys.stdin.readline().split())
 
 edges = [tuple(map(int, sys.stdin.readline().split())) for _ in range(M)]
