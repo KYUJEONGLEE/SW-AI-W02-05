@@ -78,5 +78,6 @@ for a in range(N):
 
 print(total_count)
 house_dong.sort()
+
 for cnt in range(total_count):
     print(house_dong[cnt])
