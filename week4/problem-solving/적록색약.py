@@ -11,7 +11,7 @@
 예를 들어, 그림이 아래와 같은 경우에
 
 R R R B B
-G G B B B 
+G G B B B
 B B B R R
 B B R R R
 R R R R R
@@ -66,4 +66,19 @@ for i in range(N):
         count += 1
         bfs(i, j)
 
-print(count)
+
+visited = [[False] * N for _ in range(N)]
+for i in range(N):
+    for j in range(N):
+        if graph[i][j] == 'R':
+            graph[i][j] = 'G'
+
+
+for i in range(N):
+    for j in range(N):
+        if visited[i][j]:
+            continue
+        RG_count += 1
+        bfs(i, j)
+
+print(f"{count} {RG_count}")
