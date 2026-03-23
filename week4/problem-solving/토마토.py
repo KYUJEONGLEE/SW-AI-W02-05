@@ -22,6 +22,14 @@
 결국 최단거리 구하는 문제 아닌가?
 근데 시작점이 (0,0) 이 아니라 1로 시작하는 곳들에서 시작한다.
 dist 배열에 인접한 곳들의 거리를 적어놓고, 최댓값을 출력하면 될까?
+
+동시에 검사는 못하나?
+일단 한점에서 dist를 구한 뒤에, 다른 점에서 검사하면서 같은 값을 만나면
+그 값이 최소 일인가?
+
+큐에 초기 토마토 위치를 넣을때, 현재 위치하고 있는 토마토의 위치를 순서대로 큐에
+넣으면 해결 할 수 있을거같다.
+
 """
 import sys
 from collections import deque
@@ -30,6 +38,8 @@ M, N = map(int, sys.stdin.readline().split())
 graph = []
 visited = [[False] * M for _ in range(N)]
 dist = [[0] * M for _ in range(N)]
+tomato_list = []
+
 day = 0
 
 dx = [-1, 1, 0, 0]
@@ -40,12 +50,16 @@ for _ in range(N):
     graph.append(row)
 
 
-def bfs(sx, sy):
+def bfs(tomato):
     global day
-    q = deque([(sx, sy)])
 
-    visited[sx][sy] = True
-    dist[sx][sy] = day
+    q = deque()
+    # q.append(tomato)
+
+    for sx, sy in tomato:
+        visited[sx][sy] = True
+        dist[sx][sy] = day
+        q.append((sx, sy))
 
     while q:
         x, y = q.popleft()
@@ -67,17 +81,22 @@ def bfs(sx, sy):
             dist[nx][ny] = day
             q.append((nx, ny))
 
-    day = 0
-
 
 for n in range(N):
     for m in range(M):
         if graph[n][m] == 1:
-            bfs(n, m)
+            tomato_list.append((n, m))
+
+bfs(tomato_list)
+
 max_day = 0
 for day in dist:
     if max_day < max(day):
         max_day = max(day)
 
+for n in range(N):
+    for m in range(M):
+        if graph[n][m] == 0 and not visited[n][m]:
+            max_day = -1
 
 print(max_day)
