@@ -65,4 +65,3 @@ def bfs(start, end):
 
 
 bfs(N, K)
-print(count)
