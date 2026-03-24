@@ -15,27 +15,44 @@ import sys
 from collections import deque
 
 N, M = map(int, sys.stdin.readline().split())
-graph = [[] for _ in range(N + 1)]
-
+graph = {i: [] for i in range(N + 1)}
+answer = []
+indegree = {i: 0 for i in range(N + 1)}
 for _ in range(M):
     A, B = map(int, sys.stdin.readline().split())
-    graph[B].append(A)
+    graph[A].append(B)
+    indegree[B] += 1
+
 
 """
 진입차수가 0인 정점을 먼저 넣는다.
 """
 
 
-def line(indegree):
+def line(V):
     q = deque()
     # 진입차수가 0인 정점을 찾아야하는데?
-    for idx, v in enumerate(indegree):
-        if idx == 0:
+    for v in V:
+        if v == 0:
             continue
-        if len(v) == 0:
-            q.append([idx])
+        if indegree[v] == 0:
+            q.append(v)
 
     # 그럼 q에 진입차수가 0인 정점들이 들어와있다.
+    while q:
+        cur_q = q.popleft()
+        answer.append(cur_q)
+        for next in graph[cur_q]:
+            indegree[next] -= 1
+            if indegree[next] == 0:
+                q.append(next)
+
+        # 하나 pop 하고 정답 리스트에 삽입한다
+        # 다음 해당 노드와 연결된 노드들의 진입차수를 1 감소시킨다.
+
+        # cur_q 가 가리키는 정점의 진입 차수 감소
+    return answer
 
 
-line(graph)
+result = line(graph)
+print(*result, end='')
