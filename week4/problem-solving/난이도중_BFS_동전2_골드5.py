@@ -36,13 +36,14 @@ def bfs(start, end):
 
         for j in coin:
             sum = cur_q + j
-            if not visited[sum] and sum <= k:
+            if sum <= k and not visited[sum]:
                 visited[sum] = True
                 q.append(sum)
                 dist[sum] = count
 
 
-visited = [False] * 10001
-
 bfs(0, k)
-print(dist[k])
+if dist[k] == 0:
+    print(-1)
+else:
+    print(dist[k])
