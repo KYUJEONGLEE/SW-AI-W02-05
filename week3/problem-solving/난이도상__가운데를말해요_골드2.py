@@ -13,6 +13,7 @@
 
 입력값이 들어올떄마다 sort() 시키면 시간복잡도는 어떻게 될까?
 
+sort() 를 매번 해줬더니 시간초과
 ---------------
 해결한 방법:
 
@@ -21,17 +22,23 @@
 
 """
 import sys
-from collections import deque
+import heapq
 
 N = int(sys.stdin.readline())
-X = []
+M = []
+X = heapq
+Y = []
 
 for _ in range(N):
     x = int(sys.stdin.readline())
-    X.append(x)
-    X.sort()
+    X.heappush(M, x)
 
-    if len(X) % 2 == 0:
-        print(X[(len(X) // 2) - 1])
+
+while True:
+    push_val = X.heappop(M)
+    Y.append(push_val)
+
+    if len(Y) % 2 == 0:
+        print(Y[len(Y) // 2])
     else:
-        print(X[(len(X) // 2)])
+        print(Y[(len(Y) // 2) - 1])

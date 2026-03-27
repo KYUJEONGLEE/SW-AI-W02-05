@@ -16,8 +16,8 @@ from collections import deque
 
 N, M = map(int, sys.stdin.readline().split())
 graph = {i: [] for i in range(N + 1)}
-answer = []
 indegree = {i: 0 for i in range(N + 1)}
+answer = []
 for _ in range(M):
     A, B = map(int, sys.stdin.readline().split())
     graph[A].append(B)
@@ -56,3 +56,19 @@ def line(V):
 
 result = line(graph)
 print(*result, end='')
+
+"""
+위상 정렬 푸는법:
+1. 그래프와 진입차수 준비
+- 그래프 : A -> B 저장
+- 진입차수: B를 1 증가
+** A가 B 앞에 서야한다 => A -> B
+
+2. 진입차수 0인 노드를 큐에 전부 넣기
+- 진입 차수가 0이라는 것은 앞에 올 사람이 없다는 뜻
+
+3. 큐가 빌 때까지 반복
+- 하나 꺼내서 정답에 넣고
+- "그 노드가 가리키는 다음 노드" 들의 진입차수를 1 감소
+- 감소 결과가 0 이 되면 큐에 넣기
+"""

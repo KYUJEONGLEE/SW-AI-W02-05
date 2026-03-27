@@ -21,7 +21,8 @@ sort()?
 투 포인터
 
 ---------------
-
+해결 못한 점:
+이분탐색으로는 어떻게 해결하는거지?
 """
 import sys
 
@@ -30,7 +31,7 @@ X = list(map(int, sys.stdin.readline().split()))
 
 start = 0
 end = N - 1
-min = 100000000
+min = 2000000000
 
 answer = []
 X.sort()
