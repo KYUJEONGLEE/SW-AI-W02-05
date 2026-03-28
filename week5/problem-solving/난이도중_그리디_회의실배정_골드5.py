@@ -6,6 +6,7 @@ import sys
 N = int(sys.stdin.readline())
 
 room_time = []
+using = []
 count = 0
 for _ in range(N):
     start, end = map(int, sys.stdin.readline().split())
@@ -15,9 +16,18 @@ for _ in range(N):
 
 
 def reservation_room(check):
-    check.sort(key=lambda x: x[1])
-    for start, end in check:
-        print("")
+    global count
+    check.sort(key=lambda x: (x[1], x[0]))
+
+    using.append(check[0])
+    count += 1
+
+    for start, end in check[1:]:
+        if start >= using[-1][1]:
+            using.append((start, end))
+            count += 1
+
+    return count
 
 
-reservation_room(room_time)
+print(reservation_room(room_time))
