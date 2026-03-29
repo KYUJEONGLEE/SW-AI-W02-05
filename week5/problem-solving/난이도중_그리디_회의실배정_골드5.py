@@ -13,6 +13,7 @@ for _ in range(N):
     room_time.append((start, end))
 
 # 끝나는 시간 기준으로 작은 수부터 정렬
+# 끝나는 시간이 같다면 시작 시간이 작은 순으로 정렬
 
 
 def reservation_room(check):
