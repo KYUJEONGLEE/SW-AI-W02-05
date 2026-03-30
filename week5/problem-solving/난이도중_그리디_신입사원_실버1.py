@@ -6,36 +6,21 @@ import sys
 T = int(sys.stdin.readline())
 
 for _ in range(T):
-    rank = []
-    selected = set()
-    count = 1
     N = int(sys.stdin.readline())
+    rank = []
+
     for _ in range(N):
         x, y = map(int, sys.stdin.readline().split())
         rank.append((x, y))
 
-    if len(rank) == 1:
-        print(len(rank))
-    else:
-        doc = sorted(rank, key=lambda x: x[0])
-        interview = sorted(rank, key=lambda x: x[1])
+    rank.sort(key=lambda x: x[0])   # 서류 순위 기준 정렬
 
-        min_doc = doc[0]
-        min_inter = interview[0]
-        # doc = min(rank, key=lambda x: x[0])
-        # interview = min(rank, key=lambda x: x[1])
+    count = 1                       # 서류 1등은 무조건 합격
+    min_interview = rank[0][1]      # 현재까지 면접 최고 순위(작을수록 좋음)
 
-        selected.add(min_doc)
-        selected.add(min_inter)
+    for i in range(1, N):
+        if rank[i][1] < min_interview:
+            count += 1
+            min_interview = rank[i][1]
 
-        for a, b in doc:
-            if b < min_doc[1]:
-                min_doc = (a, b)
-                selected.add(min_doc)
-
-        for a, b in interview:
-            if (a, b) in selected and a < min_inter[0]:
-                min_inter = (a, b)
-                count += 1
-
-        print(count)
+    print(count)
