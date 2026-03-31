@@ -5,25 +5,37 @@
 import sys
 
 while True:
+    pair = True
     sentence = sys.stdin.readline().rstrip()
 
     if sentence == ".":
         break
 
-    small = []
-    big = []
+    parse = []
 
     for char in sentence:
         if char == "(":
-            small.append(char)
+            parse.append(char)
         elif char == "[":
-            big.append(char)
-        elif char == ")":
-            small.pop()
-        elif char == "]":
-            big.pop()
+            parse.append(char)
 
-    if len(small) == 0 and len(big) == 0:
+        if char == ")":
+            if not parse or parse[-1] != "(":
+                print("no")
+                pair = False
+                break
+            else:
+                parse.pop()
+        elif char == "]":
+            if not parse or parse[-1] != "[":
+                print("no")
+                pair = False
+                break
+            else:
+                parse.pop()
+
+    if pair and len(parse) == 0:
         print("yes")
     else:
-        print("no")
+        if pair:
+            print("no")
